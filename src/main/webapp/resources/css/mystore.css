@@ -1,0 +1,11 @@
+.container {
+    min-height: 100vh;
+}
+
+.min-height-parent {
+    min-height: inherit;
+}
+
+.align-items-center {
+    align-items: center;
+}
