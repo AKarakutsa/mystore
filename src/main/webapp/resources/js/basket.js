@@ -67,6 +67,12 @@ $(document).ready(function(){
 
                     $("#cards").append(products);
                     $('<div class="alert alert-primary" role="alert"><p class="mb-0 text-right">Total: ' + responseJson.sum + '</p></div>').insertBefore( "#cards" );
+                }).done(function(response) {
+                    console.log('done')
+                }).fail(function(response) {
+                    console.log("error" + response.status);
+                }).always(function(response) {
+
                 });
 
                 $("#container").append('<button id="buy" type="button" class="btn btn-primary active my-3 right">Buy</button>');

@@ -28,12 +28,21 @@ public class Basket extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        Order order = OrderService.createOrder(req.getParameter("ids"));
+        String ids = req.getParameter("ids");
 
-        String json = new ObjectMapper().writeValueAsString(OrderDto.build(order));
+        if (ids == null || ids.trim().isEmpty()) {
 
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(json);
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        else {
+
+            Order order = OrderService.createOrder(req.getParameter("ids"));
+
+            String json = new ObjectMapper().writeValueAsString(OrderDto.build(order));
+
+            resp.setContentType("application/json");
+            resp.setCharacterEncoding("UTF-8");
+            resp.getWriter().write(json);
+        }
     }
 }
