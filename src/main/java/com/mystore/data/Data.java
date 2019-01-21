@@ -15,7 +15,7 @@ public class Data implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleWithFixedDelay(new UpdateDataJob(), 0, 30, TimeUnit.SECONDS);
+        scheduler.scheduleWithFixedDelay(new DataRefresher(), 0, 30, TimeUnit.SECONDS);
     }
 
     @Override

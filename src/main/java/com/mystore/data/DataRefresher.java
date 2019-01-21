@@ -9,9 +9,9 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UpdateDataJob implements Runnable {
+public class DataRefresher implements Runnable {
 
-    private static Logger log = Logger.getLogger(UpdateDataJob.class.getName());
+    private static Logger log = Logger.getLogger(DataRefresher.class.getName());
 
     private static final String WEB_INF_CLASSES_PATH = "/WEB-INF/classes/";
     private static final String DATA_CSV_PATH = "/data/data.csv";
@@ -25,12 +25,17 @@ public class UpdateDataJob implements Runnable {
 
         try {
 
+            log.info("Start update data");
             List lines = Files.readAllLines(Paths.get(dataTxtPath));
 
             Collections.shuffle(lines);
 
             Files.write(Paths.get(dataCsvPath), lines.subList(0,15));
             log.info("Data successfully updated");
+
+
+            log.info("Start update products");
+            Storage.update();
         }
         catch (IOException e) {
 

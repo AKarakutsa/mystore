@@ -18,6 +18,11 @@ public class ShopItems extends HttpServlet {
     private static Logger log = Logger.getLogger(ShopItems.class.getName());
 
     @Override
+    public void init() throws ServletException {
+        Storage.init();
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
