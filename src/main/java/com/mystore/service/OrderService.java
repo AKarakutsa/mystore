@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class OrderService {
     private static Logger log = Logger.getLogger(ShopItems.class.getName());
@@ -46,7 +47,13 @@ public class OrderService {
 
         try {
 
-            Files.write(Paths.get(dataDirPath), order.toString().getBytes());
+            String data = "ID,NAME,PRICE\n";
+            data += order.getProducts().values().stream()
+                    .map(product -> String.join(",",product.getId(), product.getName(), product.getPrice().toString()))//product.getId() + "," + product.getName() + "," +  + "\n")
+                    .collect(Collectors.joining("\n"));
+
+
+            Files.write(Paths.get(dataDirPath), data.getBytes());
             return true;
         }
         catch (IOException e) {
