@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * Return available products
+ */
 @WebServlet({"/mystore/shop/items"})
 public class ShopItems extends HttpServlet {
     private static Logger log = Logger.getLogger(ShopItems.class.getName());
@@ -36,6 +39,7 @@ public class ShopItems extends HttpServlet {
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
+        resp.addHeader("Access-Control-Allow-Origin", "*");
         resp.getWriter().write(json);
     }
 }

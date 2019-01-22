@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+/**
+ * Create validate and save order
+ */
 @WebServlet({"/mystore/buyService"})
 public class BuyService extends HttpServlet {
     private static Logger log = Logger.getLogger(BuyService.class.getName());
@@ -46,5 +49,6 @@ public class BuyService extends HttpServlet {
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
+        resp.addHeader("Access-Control-Allow-Origin", "*");
     }
 }

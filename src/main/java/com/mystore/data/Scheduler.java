@@ -7,8 +7,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Scheduler for data refresh
+ */
 @WebListener
-public class Data implements ServletContextListener {
+public class Scheduler implements ServletContextListener {
 
     private ScheduledExecutorService scheduler;
 

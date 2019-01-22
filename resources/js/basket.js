@@ -25,7 +25,7 @@ $(document).ready(function(){
                         selecteditems.push($(ob).val());
                     });
 
-                    $.post("/mystore/mystore/buyService", { 'ids': selecteditems.toString() } , function(responseJson) {
+                    $.post("http://localhost:8080/mystore/buyService", { 'ids': selecteditems.toString() } , function(responseJson) {
                         console.log('success');
                     }).done(function(response) {
                         console.log('done')
@@ -34,13 +34,13 @@ $(document).ready(function(){
                     }).always(function(response) {
 
                         if (response.status === 201) {
-                            window.location.href = "/mystore/mystore/shop/success";
+                            window.location.href = "/mystore/shop/success";
                         }
                         if (response.status === 400) {
-                            window.location.href = "/mystore/mystore/shop/failure";
+                            window.location.href = "/mystore/shop/failure";
                         }
                         else if (response.status === 500) {
-                            window.location.href = "/mystore/mystore";
+                            window.location.href = "/mystore";
                         }
                     });
                 });
@@ -49,7 +49,7 @@ $(document).ready(function(){
 
         data: {
             getProducts: function() {
-                $.post(window.location.href, function(responseJson) {
+                $.post("http://localhost:8080" + window.location.pathname + window.location.search, function(responseJson) {
 
                     var products = "";
 

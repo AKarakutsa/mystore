@@ -6,7 +6,14 @@ import java.util.Objects;
 
 public class Order {
 
+    /**
+     * Products
+     */
     private Map<String, Product> products = new HashMap<>();
+
+    /**
+     * Products sum
+     */
     private Integer sum;
 
     public Map<String, Product> getProducts() {

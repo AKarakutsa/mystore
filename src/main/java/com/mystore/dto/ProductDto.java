@@ -7,8 +7,19 @@ import java.util.Objects;
 
 public class ProductDto {
 
+    /**
+     * Product id
+     */
     private String id;
+
+    /**
+     * Product name
+     */
     private String name;
+
+    /**
+     * Product price
+     */
     private Integer price;
 
     public String getId() {

@@ -8,7 +8,14 @@ import java.util.Objects;
 
 public class OrderDto {
 
+    /**
+     * ProductDtos with ids
+     */
     private Map<String, ProductDto> products = new HashMap<>();
+
+    /**
+     * ProductDtos sum
+     */
     private Integer sum;
 
     public Map<String, ProductDto> getProducts() {

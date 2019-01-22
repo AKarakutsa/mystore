@@ -17,9 +17,12 @@ public class OrderService {
     private static Logger log = Logger.getLogger(ShopItems.class.getName());
 
     private static final String DEFAULT_SEPARATOR = ",";
-    private static final String WEB_INF_CLASSES_PATH = "/WEB-INF/classes/";
+    private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/ROOT/WEB-INF/classes/";
     private static final String DATA_DIR_PATH = "/data/";
 
+    /**
+     * Creating order from product ids
+     */
     public static Order createOrder(String ids) {
         Order order = new Order();
 
@@ -36,14 +39,20 @@ public class OrderService {
         return order;
     }
 
+    /**
+     * Validation new order for products availability
+     */
     public static boolean orderValid(Order order) {
         return order.getProducts().values().stream().noneMatch(Objects::isNull);
     }
 
+    /**
+     * Saving order to .csv file
+     */
     public static boolean saveOrder(Order order) {
 
         String dataDirPath = Objects.requireNonNull(Storage.class.getClassLoader().getResource("")).getPath()
-                .replace(WEB_INF_CLASSES_PATH, DATA_DIR_PATH + "order-" + new Date() + ".csv");
+                .replace(WEBAPPS_WEB_INF_CLASSES_PATH, DATA_DIR_PATH + "order-" + new Date() + ".csv");
 
         try {
 

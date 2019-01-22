@@ -25,14 +25,14 @@ $(document).ready(function(){
                         selecteditems.push($(ob).val());
                     });
 
-                    window.location.href = '/mystore/mystore/shop/basket?ids=' + selecteditems;
+                    window.location.href = 'http://localhost:8081/mystore/shop/basket?ids=' + selecteditems;
                 });
             }
         },
 
         data: {
             getProducts: function() {
-                $.post("/mystore/mystore/shop/items", function(responseJson) {
+                $.post("http://localhost:8080/mystore/shop/items", function(responseJson) {
 
                     var products = "";
 
