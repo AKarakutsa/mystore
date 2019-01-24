@@ -17,7 +17,7 @@ public class OrderService {
     private static Logger log = Logger.getLogger(ShopItems.class.getName());
 
     private static final String DEFAULT_SEPARATOR = ",";
-    private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/ROOT/WEB-INF/classes/";
+    private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/mystore/WEB-INF/classes/";
     private static final String DATA_DIR_PATH = "/data/";
 
     /**

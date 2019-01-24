@@ -25,18 +25,18 @@ $(document).ready(function(){
                         selecteditems.push($(ob).val());
                     });
 
-                    window.location.href = 'http://localhost:8081/mystore/shop/basket?ids=' + selecteditems;
+                    window.location.href = '/mystore/shop/basket?ids=' + selecteditems;
                 });
             }
         },
 
         data: {
             getProducts: function() {
-                $.post("http://localhost:8080/mystore/shop/items", function(responseJson) {
+                $.post("/mystore/shop/items", function(response) {
 
                     var products = "";
 
-                    $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
+                    $.each(response, function(index, product) {    // Iterate over the JSON array.
                         products
                             += '<div class="card">'
                             + ' <h5 class="card-header">' + product.name + '</h5>'

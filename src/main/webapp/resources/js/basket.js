@@ -25,7 +25,7 @@ $(document).ready(function(){
                         selecteditems.push($(ob).val());
                     });
 
-                    $.post("http://localhost:8080/mystore/buyService", { 'ids': selecteditems.toString() } , function(responseJson) {
+                    $.post("/mystore/buyService", { 'ids': selecteditems.toString() } , function(responseJson) {
                         console.log('success');
                     }).done(function(response) {
                         console.log('done')
@@ -49,11 +49,11 @@ $(document).ready(function(){
 
         data: {
             getProducts: function() {
-                $.post("http://localhost:8080" + window.location.pathname + window.location.search, function(responseJson) {
+                $.post("/mystore/shop/basket" + window.location.search, function(response) {
 
                     var products = "";
 
-                    $.each(responseJson.products, function(index, product) {
+                    $.each(response.products, function(index, product) {
                         products
                             += '<div class="card' + (product == null ? ' darkred-border' : '') + '">'
                             + ' <h5 class="card-header">' + (product == null ? '' : product.name) + '</h5>'
@@ -66,7 +66,7 @@ $(document).ready(function(){
                     });
 
                     $("#cards").append(products);
-                    $('<div class="alert alert-primary" role="alert"><p class="mb-0 text-right">Total: ' + responseJson.sum + '</p></div>').insertBefore( "#cards" );
+                    $('<div class="alert alert-primary" role="alert"><p class="mb-0 text-right">Total: ' + response.sum + '</p></div>').insertBefore( "#cards" );
                 }).done(function(response) {
                     console.log('done')
                 }).fail(function(response) {

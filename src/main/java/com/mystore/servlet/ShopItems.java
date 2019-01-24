@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * Return available products
  */
-@WebServlet({"/mystore/shop/items"})
+@WebServlet({"/shop/items"})
 public class ShopItems extends HttpServlet {
     private static Logger log = Logger.getLogger(ShopItems.class.getName());
 
@@ -29,7 +29,7 @@ public class ShopItems extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        log.info("Obtained request for getting products");
+        log.info("Obtained POST request " + req.getRequestURI());
 
         String json = new ObjectMapper().writeValueAsString(Storage.getProducts().stream()
                 .map(ProductDto::build)

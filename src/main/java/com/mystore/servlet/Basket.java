@@ -5,6 +5,7 @@ import com.mystore.dto.OrderDto;
 import com.mystore.entity.Order;
 import com.mystore.service.OrderService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,13 +17,25 @@ import java.util.logging.Logger;
 /**
  * Return order for basket
  */
-@WebServlet({"/mystore/shop/basket"})
+@WebServlet({"/shop/basket", "/shop/basket/"})
 public class Basket extends HttpServlet {
     private static Logger log = Logger.getLogger(Basket.class.getName());
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        log.info("Obtained GET request " + req.getRequestURI());
+
+        RequestDispatcher requestDispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/pages/shop/basket.html");
+
+        requestDispatcher.include(req,resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
+        log.info("Obtained POST request " + req.getRequestURI());
 
         resp.addHeader("Access-Control-Allow-Origin", "*");
         resp.setContentType("application/json");
