@@ -20,7 +20,7 @@ public class DataRefresher implements Runnable {
     private static Logger log = Logger.getLogger(DataRefresher.class.getName());
 
     private static final String WEB_INF_CLASSES_PATH = "/WEB-INF/classes/";
-    private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/ROOT/WEB-INF/classes/";
+    private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/mystore/WEB-INF/classes/";
     private static final String DATA_CSV_PATH = "/data/data.csv";
     private static final String DATA_TXT_PATH = "/data/data.txt";
 
@@ -30,9 +30,10 @@ public class DataRefresher implements Runnable {
         String dataTxtPath = appPath.replace(WEB_INF_CLASSES_PATH, DATA_TXT_PATH);
         String dataCsvPath = appPath.replace(WEBAPPS_WEB_INF_CLASSES_PATH, DATA_CSV_PATH);
 
+        log.info("Start update data");
         try {
 
-            log.info("Start update data");
+            log.info("Read data from " + dataTxtPath);
             List lines = Files.readAllLines(Paths.get(dataTxtPath));
             Path csvPath = Paths.get(dataCsvPath);
 
@@ -40,11 +41,13 @@ public class DataRefresher implements Runnable {
 
             if (!Files.exists(csvPath.getParent())) {
 
-                Files.createDirectories(csvPath.getParent());
-                Files.write(csvPath, lines.subList(0,15));
-                log.info("Data successfully updated");
+                log.info("Data directory " + csvPath.getParent() + " isn't exist. Try create...");
+                log.info("Created directory " + Files.createDirectories(csvPath.getParent()));
             }
 
+            log.info("Write data to " + csvPath);
+            Files.write(csvPath, lines.subList(0,15));
+            log.info("Data successfully updated");
 
             log.info("Start update products");
             Storage.update();
