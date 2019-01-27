@@ -12,12 +12,12 @@ import java.util.logging.Logger;
 @WebServlet({"/shop/success", "/shop/success/"})
 public class Success extends HttpServlet {
 
-    private static Logger log = Logger.getLogger(Success.class.getName());
+    private static Logger LOGGER = Logger.getLogger(Success.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        log.info("Obtained GET request " + req.getRequestURI());
+        LOGGER.info("Obtained GET request " + req.getRequestURI());
 
         RequestDispatcher requestDispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/pages/shop/success.html");
 

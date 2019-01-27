@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * Simple storage for products
  */
 public class Storage {
-    private static Logger log = Logger.getLogger(ShopItems.class.getName());
+    private static Logger LOGGER = Logger.getLogger(Storage.class.getName());
 
     private static final String DEFAULT_SEPARATOR = ",";
     private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/mystore/WEB-INF/classes/";
@@ -32,14 +32,14 @@ public class Storage {
 
         if (products.isEmpty()) {
 
-            log.info("Products list is empty");
+            LOGGER.info("Products list is empty");
         }
         else {
 
             ArrayList<Product> localStorage = getProductsFromData();
             products.clear();
             products.addAll(localStorage);
-            log.info("Products successfully updated");
+            LOGGER.info("Products successfully updated");
         }
     }
 
@@ -52,14 +52,13 @@ public class Storage {
             Path storagePath = Paths.get(Objects.requireNonNull(Storage.class.getClassLoader().getResource("")).getPath()
                     .replace(WEBAPPS_WEB_INF_CLASSES_PATH, DATA_CSV_PATH));
 
-            log.info("Try read data from " + storagePath.toString());
+            LOGGER.info("Try read data from " + storagePath.toString());
 
             lines = (ArrayList<String>) Files.readAllLines(storagePath);
         }
         catch (IOException e) {
 
-            log.log(Level.SEVERE, "Exception by parse data to products collection");
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Exception by parse data to products collection", e);
         }
 
         lines.forEach( line -> {

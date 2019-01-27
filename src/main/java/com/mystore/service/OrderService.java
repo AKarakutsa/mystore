@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class OrderService {
-    private static Logger log = Logger.getLogger(ShopItems.class.getName());
+    private static Logger LOGGER = Logger.getLogger(OrderService.class.getName());
 
     private static final String DEFAULT_SEPARATOR = ",";
     private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/mystore/WEB-INF/classes/";
@@ -34,7 +34,7 @@ public class OrderService {
             order.setSum(order.getProducts().values().stream().filter(Objects::nonNull).mapToInt(Product::getPrice).sum());
         }
 
-        log.info("Order = " + order.toString());
+        LOGGER.info("Order = " + order.toString());
 
         return order;
     }
@@ -67,8 +67,7 @@ public class OrderService {
         }
         catch (IOException e) {
 
-            log.log(Level.SEVERE, "Exception by saving order");
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Exception by saving order", e);
             return false;
         }
     }

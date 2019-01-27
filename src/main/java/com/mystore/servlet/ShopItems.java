@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  */
 @WebServlet({"/shop/items"})
 public class ShopItems extends HttpServlet {
-    private static Logger log = Logger.getLogger(ShopItems.class.getName());
+    private static Logger LOGGER = Logger.getLogger(ShopItems.class.getName());
 
     @Override
     public void init() throws ServletException {
@@ -29,13 +29,13 @@ public class ShopItems extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        log.info("Obtained POST request " + req.getRequestURI());
+        LOGGER.info("Obtained POST request " + req.getRequestURI());
 
         String json = new ObjectMapper().writeValueAsString(Storage.getProducts().stream()
                 .map(ProductDto::build)
                 .collect(Collectors.toList()));
 
-        log.info("Products = " + json);
+        LOGGER.info("Products = " + json);
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");

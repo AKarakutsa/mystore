@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class DataRefresher implements Runnable {
 
-    private static Logger log = Logger.getLogger(DataRefresher.class.getName());
+    private static Logger LOGGER = Logger.getLogger(DataRefresher.class.getName());
 
     private static final String WEB_INF_CLASSES_PATH = "/WEB-INF/classes/";
     private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/mystore/WEB-INF/classes/";
@@ -30,10 +30,10 @@ public class DataRefresher implements Runnable {
         String dataTxtPath = appPath.replace(WEB_INF_CLASSES_PATH, DATA_TXT_PATH);
         String dataCsvPath = appPath.replace(WEBAPPS_WEB_INF_CLASSES_PATH, DATA_CSV_PATH);
 
-        log.info("Start update data");
+        LOGGER.info("Start update data");
         try {
 
-            log.info("Read data from " + dataTxtPath);
+            LOGGER.info("Read data from " + dataTxtPath);
             List lines = Files.readAllLines(Paths.get(dataTxtPath));
             Path csvPath = Paths.get(dataCsvPath);
 
@@ -41,21 +41,20 @@ public class DataRefresher implements Runnable {
 
             if (!Files.exists(csvPath.getParent())) {
 
-                log.info("Data directory " + csvPath.getParent() + " isn't exist. Try create...");
-                log.info("Created directory " + Files.createDirectories(csvPath.getParent()));
+                LOGGER.info("Data directory " + csvPath.getParent() + " isn't exist. Try create...");
+                LOGGER.info("Created directory " + Files.createDirectories(csvPath.getParent()));
             }
 
-            log.info("Write data to " + csvPath);
+            LOGGER.info("Write data to " + csvPath);
             Files.write(csvPath, lines.subList(0,15));
-            log.info("Data successfully updated");
+            LOGGER.info("Data successfully updated");
 
-            log.info("Start update products");
+            LOGGER.info("Start update products");
             Storage.update();
         }
         catch (IOException e) {
 
-            log.log(Level.SEVERE, "Exception by update data");
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Exception by update data", e);
         }
     }
 }

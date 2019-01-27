@@ -19,12 +19,12 @@ import java.util.logging.Logger;
  */
 @WebServlet({"/shop/basket", "/shop/basket/"})
 public class Basket extends HttpServlet {
-    private static Logger log = Logger.getLogger(Basket.class.getName());
+    private static Logger LOGGER = Logger.getLogger(Basket.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        log.info("Obtained GET request " + req.getRequestURI());
+        LOGGER.info("Obtained GET request " + req.getRequestURI());
 
         RequestDispatcher requestDispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/pages/shop/basket.html");
 
@@ -35,7 +35,7 @@ public class Basket extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        log.info("Obtained POST request " + req.getRequestURI());
+        LOGGER.info("Obtained POST request " + req.getRequestURI());
 
         resp.addHeader("Access-Control-Allow-Origin", "*");
         resp.setContentType("application/json");

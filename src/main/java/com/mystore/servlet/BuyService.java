@@ -17,13 +17,13 @@ import java.util.logging.Logger;
 @WebServlet({"/buyService"})
 public class BuyService extends HttpServlet {
 
-    private static Logger log = Logger.getLogger(BuyService.class.getName());
+    private static Logger LOGGER = Logger.getLogger(BuyService.class.getName());
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        log.info("Obtained POST request " + req.getRequestURI());
+        LOGGER.info("Obtained POST request " + req.getRequestURI());
 
         String ids = req.getParameter("ids");
 
