@@ -1,7 +1,7 @@
-mvn clean install
-war from /target in /tomcat/webapps
-in /tomcat/bin ./startup.sh
-check for data.txt file in /tomcat/webapps/mystore/data/data.txt, if file doesn't exist, create it with this content
+Create war by using command in terminal "mvn clean install"
+Obtained war from /target copy to /tomcat/webapps
+Start tomcat in terminal from directory /tomcat/bin enter command ./startup.sh
+Check for existing data.txt file in /tomcat/webapps/mystore/data/data.txt. If file doesn't exist, create it with this content:
 
 1,Bread,15
 2,Milk,25
