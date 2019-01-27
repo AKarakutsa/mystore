@@ -12,23 +12,22 @@ import java.util.logging.Logger;
 
 /**
  * Refreshing data
- * from /webapp/data/data.txt
+ * from /webapp/classpath/data.txt
  * to   /tomcat/data/data.csv
  */
 public class DataRefresher implements Runnable {
 
     private static Logger LOGGER = Logger.getLogger(DataRefresher.class.getName());
 
-    private static final String WEB_INF_CLASSES_PATH = "/WEB-INF/classes/";
     private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/mystore/WEB-INF/classes/";
     private static final String DATA_CSV_PATH = "/data/data.csv";
-    private static final String DATA_TXT_PATH = "/data/data.txt";
+    private static final String DATA_TXT_PATH = "data.txt";
 
     @Override
     public void run() {
-        String appPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("")).getPath();
-        String dataTxtPath = appPath.replace(WEB_INF_CLASSES_PATH, DATA_TXT_PATH);
-        String dataCsvPath = appPath.replace(WEBAPPS_WEB_INF_CLASSES_PATH, DATA_CSV_PATH);
+        String classPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("")).getPath();
+        String dataTxtPath = classPath + DATA_TXT_PATH;
+        String dataCsvPath = classPath.replace(WEBAPPS_WEB_INF_CLASSES_PATH, DATA_CSV_PATH);
 
         LOGGER.info("Start update data");
         try {
