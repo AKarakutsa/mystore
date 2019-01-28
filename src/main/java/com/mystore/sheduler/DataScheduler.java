@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * Scheduler for refresh data.csv file and products collection
  */
 @WebListener
-public class Scheduler implements ServletContextListener {
+public class DataScheduler implements ServletContextListener {
 
     private ScheduledExecutorService scheduler;
 
@@ -23,8 +23,7 @@ public class Scheduler implements ServletContextListener {
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
 
-        scheduler.scheduleWithFixedDelay(new DataRefresher(), 0, 5, TimeUnit.MINUTES);
-        scheduler.scheduleWithFixedDelay(new StorageRefresher(), 0, 5, TimeUnit.MINUTES);
+        scheduler.scheduleWithFixedDelay(new DataRefresher(), 0, 1, TimeUnit.MINUTES);
     }
 
     @Override
