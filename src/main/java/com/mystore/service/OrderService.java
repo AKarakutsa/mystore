@@ -3,12 +3,14 @@ package com.mystore.service;
 import com.mystore.data.Storage;
 import com.mystore.entity.Order;
 import com.mystore.entity.Product;
-import com.mystore.servlet.ShopItems;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -17,8 +19,7 @@ public class OrderService {
     private static Logger LOGGER = Logger.getLogger(OrderService.class.getName());
 
     private static final String DEFAULT_SEPARATOR = ",";
-    private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/mystore/WEB-INF/classes/";
-    private static final String DATA_DIR_PATH = "/data/";
+    private static final String DATA_DIR = "data";
 
     /**
      * Creating order from product ids
@@ -51,18 +52,18 @@ public class OrderService {
      */
     public static boolean saveOrder(Order order) {
 
-        String dataDirPath = Objects.requireNonNull(Storage.class.getClassLoader().getResource("")).getPath()
-                .replace(WEBAPPS_WEB_INF_CLASSES_PATH, DATA_DIR_PATH + "order-" + new Date() + ".csv");
+        String webappsPath = System.getProperty("catalina.base");
+        String orderPath = String.join(File.separator, webappsPath, DATA_DIR, "order-" + new Date() + ".csv");
 
         try {
 
             String data = "ID,NAME,PRICE\n";
             data += order.getProducts().values().stream()
-                    .map(product -> String.join(",",product.getId(), product.getName(), product.getPrice().toString()))//product.getId() + "," + product.getName() + "," +  + "\n")
+                    .map(product -> String.join(",",product.getId(), product.getName(), product.getPrice().toString()))
                     .collect(Collectors.joining("\n"));
 
 
-            Files.write(Paths.get(dataDirPath), data.getBytes());
+            Files.write(Paths.get(orderPath), data.getBytes());
             return true;
         }
         catch (IOException e) {

@@ -1,5 +1,6 @@
 package com.mystore.data;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,15 +20,16 @@ public class DataRefresher implements Runnable {
 
     private static Logger LOGGER = Logger.getLogger(DataRefresher.class.getName());
 
-    private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/mystore/WEB-INF/classes/";
-    private static final String DATA_CSV_PATH = "/data/data.csv";
-    private static final String DATA_TXT_PATH = "data.txt";
+    private static final String DATA_CSV_DIR = "data";
+    private static final String DATA_CSV = "data.csv";
+    private static final String DATA_TXT = "data.txt";
 
     @Override
     public void run() {
+        String webappsPath = System.getProperty("catalina.base");
         String classPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("")).getPath();
-        String dataTxtPath = classPath + DATA_TXT_PATH;
-        String dataCsvPath = classPath.replace(WEBAPPS_WEB_INF_CLASSES_PATH, DATA_CSV_PATH);
+        String dataTxtPath = String.join(File.separator, classPath, DATA_TXT);
+        String dataCsvPath = String.join(File.separator, webappsPath, DATA_CSV_DIR, DATA_CSV);
 
         LOGGER.info("Start update data");
         try {
