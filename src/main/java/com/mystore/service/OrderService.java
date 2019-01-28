@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class OrderService {
     private static Logger LOGGER = Logger.getLogger(OrderService.class.getName());
 
-    private static final String DEFAULT_SEPARATOR = ",";
+    private static final String COMMA = ",";
     private static final String DATA_DIR = "data";
 
     /**
@@ -29,7 +29,7 @@ public class OrderService {
 
         if (ids != null && !ids.trim().isEmpty()) {
 
-            Arrays.stream(ids.split(DEFAULT_SEPARATOR)).forEach(id ->
+            Arrays.stream(ids.split(COMMA)).forEach(id ->
                     order.getProducts().put(id, Storage.getProducts().stream().filter(product -> product.getId().equals(id)).findFirst().orElse(null)));
 
             order.setSum(order.getProducts().values().stream().filter(Objects::nonNull).mapToInt(Product::getPrice).sum());
@@ -52,8 +52,8 @@ public class OrderService {
      */
     public static boolean saveOrder(Order order) {
 
-        String webappsPath = System.getProperty("catalina.base");
-        String orderPath = String.join(File.separator, webappsPath, DATA_DIR, "order-" + new Date() + ".csv");
+        String sharedLoaderPath = System.getProperty("shared.loader");
+        String orderPath = String.join(File.separator, sharedLoaderPath, DATA_DIR, "order-" + new Date() + ".csv");
 
         try {
 

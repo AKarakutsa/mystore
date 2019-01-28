@@ -1,14 +1,12 @@
 package com.mystore.data;
 
 import com.mystore.entity.Product;
-import com.mystore.servlet.ShopItems;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,9 +16,9 @@ import java.util.logging.Logger;
 public class Storage {
     private static Logger LOGGER = Logger.getLogger(Storage.class.getName());
 
-    private static final String DEFAULT_SEPARATOR = ",";
-    private static final String WEBAPPS_WEB_INF_CLASSES_PATH = "/webapps/mystore/WEB-INF/classes/";
-    private static final String DATA_CSV_PATH = "/data/data.csv";
+    private static final String COMMA = ",";
+    private static final String DATA_CSV_DIR = "data";
+    private static final String DATA_CSV = "data.csv";
     private static final ArrayList<Product> products = new ArrayList();
 
     public static void init() {
@@ -48,13 +46,12 @@ public class Storage {
         ArrayList<String> lines = new ArrayList();
 
         try {
+            String sharedLoaderPath = System.getProperty("shared.loader");
+            String dataCsvPath = String.join(File.separator, sharedLoaderPath, DATA_CSV_DIR, DATA_CSV);
 
-            Path storagePath = Paths.get(Objects.requireNonNull(Storage.class.getClassLoader().getResource("")).getPath()
-                    .replace(WEBAPPS_WEB_INF_CLASSES_PATH, DATA_CSV_PATH));
+            LOGGER.info("Try read data from " + dataCsvPath);
 
-            LOGGER.info("Try read data from " + storagePath.toString());
-
-            lines = (ArrayList<String>) Files.readAllLines(storagePath);
+            lines = (ArrayList<String>) Files.readAllLines(Paths.get(dataCsvPath));
         }
         catch (IOException e) {
 
@@ -62,7 +59,7 @@ public class Storage {
         }
 
         lines.forEach( line -> {
-            String[] splitedLine = line.split(DEFAULT_SEPARATOR);
+            String[] splitedLine = line.split(COMMA);
             Product product = new Product();
 
             product.setId(splitedLine[0]);

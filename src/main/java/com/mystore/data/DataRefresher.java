@@ -13,8 +13,8 @@ import java.util.logging.Logger;
 
 /**
  * Refreshing data
- * from /webapp/classpath/data.txt
- * to   /tomcat/data/data.csv
+ * from System.getProperty("shared.loader")data.txt
+ * to   System.getProperty("shared.loader")data/data.csv
  */
 public class DataRefresher implements Runnable {
 
@@ -26,10 +26,9 @@ public class DataRefresher implements Runnable {
 
     @Override
     public void run() {
-        String webappsPath = System.getProperty("catalina.base");
-        String classPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("")).getPath();
-        String dataTxtPath = String.join(File.separator, classPath, DATA_TXT);
-        String dataCsvPath = String.join(File.separator, webappsPath, DATA_CSV_DIR, DATA_CSV);
+        String sharedLoaderPath = System.getProperty("shared.loader");
+        String dataTxtPath = String.join(File.separator, sharedLoaderPath, DATA_TXT);
+        String dataCsvPath = String.join(File.separator, sharedLoaderPath, DATA_CSV_DIR, DATA_CSV);
 
         LOGGER.info("Start update data");
         try {
