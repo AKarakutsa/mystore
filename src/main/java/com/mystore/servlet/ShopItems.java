@@ -22,7 +22,7 @@ public class ShopItems extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        Storage.init();
+        Storage.create();
     }
 
     @Override

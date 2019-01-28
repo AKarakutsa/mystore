@@ -2,12 +2,9 @@ package com.mystore.data;
 
 import com.mystore.entity.Product;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.logging.Level;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -21,44 +18,42 @@ public class Storage {
     private static final String DATA_CSV = "data.csv";
     private static final ArrayList<Product> products = new ArrayList();
 
-    public static void init() {
+    public static void create() {
 
-        products.addAll(getProductsFromData());
+        LOGGER.info("Start create data");
+        List<String> dataCsv = Data.init();
+        LOGGER.info("Data.csv successfully created");
+
+        LOGGER.info("Start adding products");
+        products.addAll(convertDataToProducts(dataCsv));
+        LOGGER.info("Added [" + products.size() + "] products");
     }
 
     public static void update() {
 
         if (products.isEmpty()) {
 
-            LOGGER.info("Products list is empty");
+            LOGGER.info("Products is empty. Nothing to update.");
         }
         else {
 
-            ArrayList<Product> localStorage = getProductsFromData();
+            LOGGER.info("Start update products");
             products.clear();
-            products.addAll(localStorage);
+            products.addAll(convertDataToProducts(Data.getData()));
             LOGGER.info("Products successfully updated");
         }
     }
 
-    private static ArrayList<Product> getProductsFromData() {
-        ArrayList<Product> localStorage = new ArrayList();
-        ArrayList<String> lines = new ArrayList();
+    public static List<Product> getProducts() {
 
-        try {
-            String sharedLoaderPath = System.getProperty("shared.loader");
-            String dataCsvPath = String.join(File.separator, sharedLoaderPath, DATA_CSV_DIR, DATA_CSV);
+        return Collections.unmodifiableList(new ArrayList<>(products));
+    }
 
-            LOGGER.info("Try read data from " + dataCsvPath);
+    private static List<Product> convertDataToProducts(List<String> dataCsv) {
 
-            lines = (ArrayList<String>) Files.readAllLines(Paths.get(dataCsvPath));
-        }
-        catch (IOException e) {
+        List<Product> localStorage = new ArrayList<>();
 
-            LOGGER.log(Level.SEVERE, "Exception by parse data to products collection", e);
-        }
-
-        lines.forEach( line -> {
+        dataCsv.forEach( line -> {
             String[] splitedLine = line.split(COMMA);
             Product product = new Product();
 
@@ -70,10 +65,5 @@ public class Storage {
         });
 
         return localStorage;
-    }
-
-    public static ArrayList<Product> getProducts() {
-
-        return products;
     }
 }
