@@ -1,6 +1,5 @@
 package com.mystore.sheduler;
 
-import com.mystore.sheduler.job.DataRefresher;
 import com.mystore.sheduler.job.StorageRefresher;
 
 import javax.servlet.ServletContextEvent;
@@ -11,7 +10,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Scheduler for refresh data.csv file and products collection
+ * Scheduler for refresh Storage.products
  */
 @WebListener
 public class StorageScheduler implements ServletContextListener {

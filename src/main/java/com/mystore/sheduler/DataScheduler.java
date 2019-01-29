@@ -11,7 +11,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Scheduler for refresh data.csv file and products collection
+ * Scheduler for refresh data.csv
  */
 @WebListener
 public class DataScheduler implements ServletContextListener {
