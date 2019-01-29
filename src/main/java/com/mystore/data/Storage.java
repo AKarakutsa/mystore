@@ -14,8 +14,6 @@ public class Storage {
     private static Logger LOGGER = Logger.getLogger(Storage.class.getName());
 
     private static final String COMMA = ",";
-    private static final String DATA_CSV_DIR = "data";
-    private static final String DATA_CSV = "data.csv";
     private static final ArrayList<Product> products = new ArrayList();
 
     public static void create() {

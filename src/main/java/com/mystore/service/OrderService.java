@@ -52,8 +52,8 @@ public class OrderService {
      */
     public static boolean saveOrder(Order order) {
 
-        String sharedLoaderPath = System.getProperty("shared.loader");
-        String orderPath = String.join(File.separator, sharedLoaderPath, DATA_DIR, "order-" + new Date() + ".csv");
+        String catalinaBasePath = System.getProperty("catalina.base");
+        String orderPath = String.join(File.separator, catalinaBasePath, DATA_DIR, "order-" + new Date() + ".csv");
 
         try {
 

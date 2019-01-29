@@ -1,15 +1,19 @@
 package com.mystore.data;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class Data {
 
@@ -21,19 +25,19 @@ public class Data {
 
     public static List<String> init() {
 
-        String sharedLoaderPath = System.getProperty("shared.loader");
-        String dataTxtPath = String.join(File.separator, sharedLoaderPath, DATA_TXT);
-        String dataCsvPath = String.join(File.separator, sharedLoaderPath, DATA_CSV_DIR, DATA_CSV);
+        String catalinaBasePath = System.getProperty("catalina.base");
+        String dataCsvPath = String.join(File.separator, catalinaBasePath, DATA_CSV_DIR, DATA_CSV);
         List<String> dataCsv = new ArrayList<>();
 
         try {
 
-            LOGGER.info("Read data from " + dataTxtPath);
-            List lines = Files.readAllLines(Paths.get(dataTxtPath));
+            LOGGER.info("Read data.txt from " + Data.class.getClassLoader().getResource(DATA_TXT));
+            List<String> dataTxt = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Data.class.getClassLoader().getResourceAsStream(DATA_TXT))))
+                    .lines().collect(Collectors.toList());
+
+            Collections.shuffle(dataTxt);
+
             Path csvPath = Paths.get(dataCsvPath);
-
-            Collections.shuffle(lines);
-
             if (!Files.exists(csvPath.getParent())) {
 
                 LOGGER.info("Data directory " + csvPath.getParent() + " isn't exist. Try create...");
@@ -41,7 +45,7 @@ public class Data {
             }
 
             LOGGER.info("Write data to " + csvPath);
-            List<String> availableProducts = lines.subList(0,15);
+            List<String> availableProducts = dataTxt.subList(0,15);
             Files.write(csvPath, availableProducts);
             dataCsv = availableProducts;
         }
@@ -59,8 +63,8 @@ public class Data {
 
     public static List<String> getData() {
 
-        String sharedLoaderPath = System.getProperty("shared.loader");
-        String dataCsvPath = String.join(File.separator, sharedLoaderPath, DATA_CSV_DIR, DATA_CSV);
+        String catalinaBasePath = System.getProperty("catalina.base");
+        String dataCsvPath = String.join(File.separator, catalinaBasePath, DATA_CSV_DIR, DATA_CSV);
         List<String> dataCsv = new ArrayList<>();
 
         try {
